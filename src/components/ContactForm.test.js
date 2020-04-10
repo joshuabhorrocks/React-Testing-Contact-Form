@@ -12,7 +12,7 @@ test('inputs are visible', () => {
 })
 
 test("Form Submit", () => {
-    const {getByLabelText, getByText, getByTestId} = render(<ContactForm />);
+    async () => { const {getByLabelText, getByText, getByTestId} = render(<ContactForm />);
 
     const fNameInput = getByLabelText(/First Name/i);
     const lNameInput = getByLabelText(/Last Name/i);
@@ -29,8 +29,17 @@ test("Form Submit", () => {
     expect(emailInput.value).toBe("joshua-horrocks@lambdastudents.com");
     expect(messageInput.value).toBe("This is a test, please disregard");
 
-    fireEvent.click(getByTestId(/submit/i));
+    //fireEvent.click(getByTestId(/submit/i));}
 
-    // const formText = getByLabelText('"firstName": "Jay","lastName": "Horrocks","email": "joshua-horrocks@lambdastudents.com","message": "This is a test, please disregard"');
+    async () => {
+        act(async () => {
+            fireEvent.click(submitButton);
+            const formData =  await findByTestId("preData")
+            expect(formData).toBeInTheDocument();
+        })
+    }
+
+    // const formText = getByLabelText('"firstName": "Joshua","lastName": "Horrocks","email": "joshua-horrocks@lambdastudents.com","message": "This is a test, please disregard"');
     // expect(formText).toBeInTheDocument();
+}
 })
